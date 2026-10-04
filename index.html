@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>FOOTBALL GUESS — The Bilingual Football Quiz</title>
+  
+  <!-- Editorial Sports Typography: Archivo (Headings/Numbers) + Inter (Body/Translations) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800;900&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Canvas for subtle celebratory accent -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <div class="site-container">
+    <!-- Top Global Editorial Header -->
+    <header class="site-masthead">
+      <div class="masthead-left">
+        <span class="masthead-brand">FOOTBALL GUESS</span>
+        <span class="masthead-divider">/</span>
+        <span class="masthead-sub">FUTBOLCHI TOPISH</span>
+      </div>
+
+      <div class="masthead-right">
+        <!-- Sound control (Clean stacked text toggle) -->
+        <button id="global-sound-btn" class="masthead-sound-btn" type="button" aria-label="Toggle Sound">
+          <span class="sound-indicator-dot"></span>
+          <div class="sound-labels">
+            <span id="sound-label-en" class="sound-label-en">SOUND ON</span>
+            <span id="sound-label-uz" class="sound-label-uz">OVOZ YOQ</span>
+          </div>
+        </button>
+      </div>
+    </header>
+
+    <!-- ==================== 1. HOME SCREEN (EDITORIAL HERO) ==================== -->
+    <main id="screen-home" class="view-screen active" role="main">
+      <div class="home-editorial-layout">
+        <!-- Editorial Headline Block -->
+        <section class="home-headline-section">
+          <div class="kicker-row">
+            <span class="editorial-kicker">EDITION 2026 — 5 PLAYERS · 5 QUESTIONS</span>
+          </div>
+
+          <h1 class="editorial-headline">
+            <span class="title-en">FOOTBALL<br>GUESS</span>
+            <span class="title-uz">FUTBOLCHI TOPISH</span>
+          </h1>
+
+          <div class="editorial-strapline">
+            <p class="strapline-en">Test your football knowledge through portraits and tactical facts.</p>
+            <p class="strapline-uz">Futbolchilar suratlari va ma’lumotlari orqali bilimlaringizni sinab ko‘ring.</p>
+          </div>
+        </section>
+
+        <!-- Metadata & Rules Strip -->
+        <section class="home-spec-strip">
+          <div class="spec-item">
+            <span class="spec-label">ROUND FORMAT</span>
+            <span class="spec-value-en">5 Players / 5 Questions</span>
+            <span class="spec-value-uz">5 futbolchi / 5 ta savol</span>
+          </div>
+          <div class="spec-divider"></div>
+          <div class="spec-item">
+            <span class="spec-label">SCORING</span>
+            <span class="spec-value-en">+100 Per Correct (500 Max)</span>
+            <span class="spec-value-uz">Har bir to‘g‘ri javobga +100</span>
+          </div>
+          <div class="spec-divider"></div>
+          <div class="spec-item">
+            <span class="spec-label">DIFFICULTY</span>
+            <span class="spec-value-en">International & Club Elite</span>
+            <span class="spec-value-uz">Jahon va klublar futboli</span>
+          </div>
+        </section>
+
+        <!-- Main Action & Record Row -->
+        <section class="home-action-row">
+          <button id="btn-play" class="editorial-primary-btn" type="button">
+            <div class="btn-text-group">
+              <span class="btn-title-en">START GAME</span>
+              <span class="btn-title-uz">O‘YINNI BOSHLASH</span>
+            </div>
+            <span class="btn-glyph">→</span>
+          </button>
+
+          <!-- Sleek inline record badge -->
+          <div class="home-record-module">
+            <span class="record-module-label">BEST RECORD · ENG YUQORI NATIJA</span>
+            <div id="home-best-score-val" class="record-module-value">
+              <span class="text-en">No score recorded yet</span>
+              <span class="text-uz">Hali natija qayd etilmagan</span>
+            </div>
+          </div>
+        </section>
+
+        <footer class="home-editorial-footer">
+          <span class="footer-keyboard-hint">Press <kbd>Space</kbd> or <kbd>Enter</kbd> to begin · Shortcuts <kbd>1</kbd>–<kbd>4</kbd> during play</span>
+        </footer>
+      </div>
+    </main>
+
+    <!-- ==================== 2. GAME SCREEN (SPLIT EDITORIAL LAYOUT) ==================== -->
+    <main id="screen-game" class="view-screen hidden" role="main">
+      <div class="game-matchday-layout">
+        <!-- Matchday Status Bar -->
+        <header class="game-statusbar">
+          <div class="status-left">
+            <span class="status-label">PLAYER</span>
+            <div id="hud-player-text" class="status-player-bilingual">
+              <span class="text-en">01 / 05</span>
+              <span class="text-uz">1 / 5-FUTBOLCHI</span>
+            </div>
+          </div>
+
+          <!-- Hairline Progress Indicator -->
+          <div class="status-progress-wrapper" aria-label="Game Progress">
+            <div class="status-progress-track">
+              <div id="progress-bar-fill" class="status-progress-fill" style="width: 20%;"></div>
+            </div>
+          </div>
+
+          <div class="status-right">
+            <div class="status-stat-group">
+              <span class="status-label">SCORE</span>
+              <span id="hud-score-en" class="status-stat-value">0</span>
+              <span id="hud-score-uz" class="status-stat-sub">OCHKO: 0</span>
+            </div>
+
+            <div class="status-stat-group streak-group">
+              <span class="status-label">STREAK</span>
+              <span id="hud-streak-en" class="status-stat-value">0</span>
+              <span id="hud-streak-uz" class="status-stat-sub">KETMA-KET: 0</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main Split Stage: Photo on Left, Question & Answers on Right -->
+        <section class="game-stage-grid">
+          <!-- Left Column: The Photograph Hero -->
+          <div class="stage-visual-col">
+            <div class="player-photo-container">
+              <img id="player-photo" class="editorial-player-img" src="assets/players/fallback.svg" alt="Mystery Footballer Portrait" loading="eager">
+              
+              <!-- Subtle mystery frame indicator -->
+              <div class="photo-meta-tag">
+                <span class="meta-tag-id">FOOTBALLER DOSSIER</span>
+              </div>
+
+              <!-- Sleek revealed dossier bar (shown after answer) -->
+              <div id="player-reveal-badge" class="player-revealed-bar hidden">
+                <div id="player-name" class="revealed-player-title">Lionel Messi</div>
+                <div id="player-sub" class="revealed-player-meta">Forward • Inter Miami</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Editorial Question & Structured Answer List -->
+          <div class="stage-query-col">
+            <!-- Question Header -->
+            <div class="query-header">
+              <div class="query-kicker">
+                <span id="cat-badge-en" class="kicker-en">QUESTION 01 — COUNTRY</span>
+                <span class="kicker-sep">/</span>
+                <span id="cat-badge-uz" class="kicker-uz">DAVLAT</span>
+              </div>
+
+              <h2 id="question-en" class="query-title-en">Which country is this footballer from?</h2>
+              <p id="question-uz" class="query-title-uz">Bu futbolchi qaysi davlatdan?</p>
+            </div>
+
+            <!-- Structured Answer List (01, 02, 03, 04) -->
+            <div id="answers-grid" class="query-answers-list" role="group" aria-label="Answer Options">
+              <!-- Injected dynamically by UIController -->
+            </div>
+
+            <!-- Post-Answer Editorial Feedback Notice -->
+            <div id="feedback-area" class="query-feedback-panel hidden" role="status" aria-live="polite">
+              <!-- Injected dynamically by UIController -->
+            </div>
+
+            <!-- Next Action -->
+            <div class="query-action-panel">
+              <button id="btn-next" class="editorial-next-btn hidden" type="button">
+                <div class="btn-text-group">
+                  <span id="next-btn-en" class="next-label-en">NEXT PLAYER</span>
+                  <span id="next-btn-uz" class="next-label-uz">KEYINGI FUTBOLCHI</span>
+                </div>
+                <span class="next-arrow">→</span>
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- ==================== 3. RESULT SCREEN (MATCHDAY REPORT) ==================== -->
+    <main id="screen-result" class="view-screen hidden" role="main">
+      <div class="result-report-layout">
+        <!-- Match Report Header -->
+        <header class="report-header">
+          <div class="report-kicker">ROUND SUMMARY REPORT · O‘YIN HISOBOTI</div>
+          <h1 class="report-title">
+            <span class="title-en">GAME COMPLETE</span>
+            <span class="title-uz">O‘YIN YAKUNLANDI</span>
+          </h1>
+        </header>
+
+        <!-- New Record Notice -->
+        <div id="result-new-best" class="report-new-record hidden">
+          <span class="record-star-glyph">★</span>
+          <div class="record-text-group">
+            <span class="text-en font-bold">NEW ALL-TIME BEST SCORE</span>
+            <span class="text-uz">YANGI ENG YUQORI NATIJA</span>
+          </div>
+        </div>
+
+        <!-- Score Headline Module -->
+        <section class="report-score-hero">
+          <div class="score-hero-primary">
+            <span id="result-score-num" class="score-number-display">400</span>
+            <span class="score-denom">/ 500 PTS</span>
+          </div>
+          <div class="score-hero-label">
+            <span class="text-en font-bold">TOTAL SCORE</span>
+            <span class="text-uz">YAKUNIY OCHKOINGIZ</span>
+          </div>
+        </section>
+
+        <!-- Rating & Tier Banner -->
+        <section class="report-tier-module">
+          <span class="tier-kicker">CLASSIFICATION · TARAQQIYOT DARAJASI</span>
+          <div class="tier-names">
+            <div id="result-rating-en" class="tier-title-en">Football Master</div>
+            <div id="result-rating-uz" class="tier-title-uz">Futbol ustasi</div>
+          </div>
+        </section>
+
+        <!-- Performance Metrics Breakdown -->
+        <section class="report-metrics-grid" aria-label="Detailed Breakdown">
+          <div class="metric-cell">
+            <span class="metric-label">ACCURACY · ANIQLIK</span>
+            <span id="result-accuracy-en" class="metric-value">80%</span>
+            <span id="result-accuracy-uz" class="metric-sub">80% to‘g‘ri javob</span>
+          </div>
+          <div class="metric-cell">
+            <span class="metric-label">CORRECT PICKS · TO‘G‘RI</span>
+            <span id="result-correct-en" class="metric-value">4 / 5</span>
+            <span id="result-correct-uz" class="metric-sub">5 tadan 4 tasi to‘g‘ri</span>
+          </div>
+          <div class="metric-cell">
+            <span class="metric-label">BEST STREAK · ENG UZUN SERIYA</span>
+            <span id="result-streak-en" class="metric-value">3</span>
+            <span id="result-streak-uz" class="metric-sub">Ketma-ket 3 ta to‘g‘ri</span>
+          </div>
+        </section>
+
+        <!-- Final Report Actions -->
+        <footer class="report-actions-row">
+          <button id="btn-play-again" class="editorial-primary-btn" type="button">
+            <div class="btn-text-group">
+              <span class="btn-title-en">PLAY AGAIN</span>
+              <span class="btn-title-uz">QAYTA O‘YNASH</span>
+            </div>
+            <span class="btn-glyph">↺</span>
+          </button>
+
+          <button id="btn-go-home" class="editorial-secondary-btn" type="button">
+            <div class="btn-text-group">
+              <span class="btn-title-en">RETURN TO HOME</span>
+              <span class="btn-title-uz">ASOSIY SAHIFA</span>
+            </div>
+          </button>
+        </footer>
+      </div>
+    </main>
+  </div>
+
+  <!-- Game Scripts in correct dependency order -->
+  <script src="js/data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/questions.js"></script>
+  <script src="js/validate.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
